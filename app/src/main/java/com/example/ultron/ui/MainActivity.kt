@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
         voiceButton = findViewById(R.id.voiceButton)
 
         if (UltronService.isAccessibilityEnabled(this)) {
-            statusText.text = "Ultron Active ✓"
+            statusText.text = if (apiKey.isEmpty()) "⚠️ API key missing!" else "Ultron Active ✓"
         } else {
             statusText.text = "Ultron Inactive"
             UltronService.openAccessibilitySettings(this)
@@ -87,6 +87,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun sendToClaude(command: String) {
+        if (apiKey.isEmpty()) {
+            statusText.text = "⚠️ No API key found in build!"
+            return
+        }
+
         val json = JSONObject().apply {
             put("model", "claude-sonnet-4-6")
             put("max_tokens", 1024)
@@ -108,15 +113,21 @@ class MainActivity : AppCompatActivity() {
 
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
-                runOnUiThread { statusText.text = "Error: ${e.message}" }
+                runOnUiThread { statusText.text = "Network error: ${e.message}" }
             }
 
             override fun onResponse(call: Call, response: Response) {
-                val body = response.body?.string()
-                val reply = JSONObject(body ?: "{}")
+                val bodyStr = response.body?.string() ?: "{}"
+                if (!response.isSuccessful) {
+                    runOnUiThread {
+                        statusText.text = "API error ${response.code}: $bodyStr"
+                    }
+                    return
+                }
+                val reply = JSONObject(bodyStr)
                     .optJSONArray("content")
                     ?.optJSONObject(0)
-                    ?.optString("text") ?: "No response"
+                    ?.optString("text") ?: "Empty response"
                 runOnUiThread {
                     statusText.text = reply
                     inputText.text.clear()
