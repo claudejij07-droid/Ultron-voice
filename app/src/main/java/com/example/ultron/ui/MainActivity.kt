@@ -3,6 +3,7 @@ package com.example.ultron.ui
 import android.content.Intent
 import android.os.Bundle
 import android.speech.RecognizerIntent
+import android.speech.tts.TextToSpeech
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -10,8 +11,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.ultron.BuildConfig
 import com.example.ultron.R
 import com.example.ultron.service.UltronService
-import android.speech.tts.TextToSpeech
-import java.util.Locale
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.MediaType.Companion.toMediaType
@@ -22,20 +21,22 @@ import okhttp3.Response
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.IOException
+import java.util.Locale
 
 class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
-    private lateinit var tts: TextToSpeech
     private val client = OkHttpClient()
-    private val apiKey = BuildConfig.ANTHROPIC_API_KEY
+    private val apiKey = BuildConfig.GROQ_API_KEY
     private lateinit var statusText: TextView
     private lateinit var inputText: EditText
     private lateinit var sendButton: Button
     private lateinit var voiceButton: Button
+    private lateinit var tts: TextToSpeech
     private val VOICE_REQUEST_CODE = 100
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        tts = TextToSpeech(this, this)
 
         statusText = findViewById(R.id.statusText)
         inputText = findViewById(R.id.inputText)
@@ -53,12 +54,19 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             val command = inputText.text.toString()
             if (command.isNotEmpty()) {
                 statusText.text = "Thinking..."
-                sendToClaude(command)
+                sendToGroq(command)
             }
         }
 
         voiceButton.setOnClickListener {
             startVoiceRecognition()
+        }
+    }
+
+    override fun onInit(status: Int) {
+        if (status == TextToSpeech.SUCCESS) {
+            tts.language = Locale.US
+            tts.speak("Ultron online, how can I help you, sir", TextToSpeech.QUEUE_FLUSH, null, null)
         }
     }
 
@@ -84,20 +92,19 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             if (spokenText.isNotEmpty()) {
                 inputText.setText(spokenText)
                 statusText.text = "Thinking..."
-                sendToClaude(spokenText)
+                sendToGroq(spokenText)
             }
         }
     }
 
-    private fun sendToClaude(command: String) {
+    private fun sendToGroq(command: String) {
         if (apiKey.isEmpty()) {
             statusText.text = "⚠️ No API key found in build!"
             return
         }
 
         val json = JSONObject().apply {
-            put("model", "claude-sonnet-4-6")
-            put("max_tokens", 1024)
+            put("model", "llama-3.3-70b-versatile")
             put("messages", JSONArray().apply {
                 put(JSONObject().apply {
                     put("role", "user")
@@ -107,9 +114,8 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         }
 
         val request = Request.Builder()
-            .url("https://api.anthropic.com/v1/messages")
-            .addHeader("x-api-key", apiKey)
-            .addHeader("anthropic-version", "2023-06-01")
+            .url("https://api.groq.com/openai/v1/chat/completions")
+            .addHeader("Authorization", "Bearer $apiKey")
             .addHeader("content-type", "application/json")
             .post(json.toString().toRequestBody("application/json".toMediaType()))
             .build()
@@ -122,26 +128,20 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             override fun onResponse(call: Call, response: Response) {
                 val bodyStr = response.body?.string() ?: "{}"
                 if (!response.isSuccessful) {
-                    runOnUiThread {
-                        statusText.text = "API error ${response.code}: $bodyStr"
-                    }
+                    runOnUiThread { statusText.text = "API error ${response.code}: $bodyStr" }
                     return
                 }
                 val reply = JSONObject(bodyStr)
-                    .optJSONArray("content")
+                    .optJSONArray("choices")
                     ?.optJSONObject(0)
-                    ?.optString("text") ?: "Empty response"
+                    ?.optJSONObject("message")
+                    ?.optString("content") ?: "Empty response"
                 runOnUiThread {
                     statusText.text = reply
                     inputText.text.clear()
+                    tts.speak(reply, TextToSpeech.QUEUE_FLUSH, null, null)
                 }
             }
         })
-    }
-    override fun onInit(status: Int) {
-        if (status == TextToSpeech.SUCCESS) {
-            tts.language = Locale.US
-            tts.speak("Ultron online, how can I help you, sir", TextToSpeech.QUEUE_FLUSH, null, null)
-        }
     }
 }
