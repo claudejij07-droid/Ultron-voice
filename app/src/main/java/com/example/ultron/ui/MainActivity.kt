@@ -7,11 +7,16 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.ultron.BuildConfig
 import com.example.ultron.R
 import com.example.ultron.service.UltronService
-import okhttp3.*
+import okhttp3.Call
+import okhttp3.Callback
 import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.OkHttpClient
+import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
+import okhttp3.Response
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.IOException
@@ -60,12 +65,14 @@ class MainActivity : AppCompatActivity() {
             putExtra(RecognizerIntent.EXTRA_PROMPT, "Speak your command")
         }
         try {
+            @Suppress("DEPRECATION")
             startActivityForResult(intent, VOICE_REQUEST_CODE)
         } catch (e: Exception) {
             statusText.text = "Voice recognition not available"
         }
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == VOICE_REQUEST_CODE && resultCode == RESULT_OK) {
@@ -106,10 +113,10 @@ class MainActivity : AppCompatActivity() {
 
             override fun onResponse(call: Call, response: Response) {
                 val body = response.body?.string()
-                val reply = JSONObject(body!!)
-                    .getJSONArray("content")
-                    .getJSONObject(0)
-                    .getString("text")
+                val reply = JSONObject(body ?: "{}")
+                    .optJSONArray("content")
+                    ?.optJSONObject(0)
+                    ?.optString("text") ?: "No response"
                 runOnUiThread {
                     statusText.text = reply
                     inputText.text.clear()
