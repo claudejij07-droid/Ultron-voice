@@ -4,8 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.speech.RecognizerIntent
 import android.speech.tts.TextToSpeech
-import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.ultron.BuildConfig
@@ -27,9 +27,10 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     private val client = OkHttpClient()
     private val apiKey = BuildConfig.GROQ_API_KEY
     private lateinit var statusText: TextView
+    private lateinit var greetingText: TextView
     private lateinit var inputText: EditText
-    private lateinit var sendButton: Button
-    private lateinit var voiceButton: Button
+    private lateinit var sendButton: ImageButton
+    private lateinit var voiceButton: ImageButton
     private lateinit var tts: TextToSpeech
     private val VOICE_REQUEST_CODE = 100
 
@@ -39,14 +40,15 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         tts = TextToSpeech(this, this)
 
         statusText = findViewById(R.id.statusText)
+        greetingText = findViewById(R.id.greetingText)
         inputText = findViewById(R.id.inputText)
         sendButton = findViewById(R.id.sendButton)
         voiceButton = findViewById(R.id.voiceButton)
 
         if (UltronService.isAccessibilityEnabled(this)) {
-            statusText.text = if (apiKey.isEmpty()) "⚠️ API key missing!" else "Ultron Active ✓"
+            greetingText.text = "Hi, what would you like to do today?"
         } else {
-            statusText.text = "Ultron Inactive"
+            greetingText.text = "Ultron needs accessibility access"
             UltronService.openAccessibilitySettings(this)
         }
 
