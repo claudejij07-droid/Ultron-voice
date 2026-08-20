@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.ultron.BuildConfig
 import com.example.ultron.R
 import com.example.ultron.service.UltronService
+import android.speech.tts.TextToSpeech
+import java.util.Locale
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.MediaType.Companion.toMediaType
@@ -21,7 +23,8 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.io.IOException
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
+    private lateinit var tts: TextToSpeech
     private val client = OkHttpClient()
     private val apiKey = BuildConfig.ANTHROPIC_API_KEY
     private lateinit var statusText: TextView
@@ -134,5 +137,11 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         })
+    }
+    override fun onInit(status: Int) {
+        if (status == TextToSpeech.SUCCESS) {
+            tts.language = Locale.US
+            tts.speak("Ultron online, how can I help you, sir", TextToSpeech.QUEUE_FLUSH, null, null)
+        }
     }
 }
