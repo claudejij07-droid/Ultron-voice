@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="24dp"
+    android:background="#1A1A2E">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ULTRON"
+        android:textSize="36sp"
+        android:textColor="#00FF88"
+        android:textStyle="bold"
+        android:layout_marginBottom="32dp"/>
+
+    <TextView
+        android:id="@+id/statusText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Initializing..."
+        android:textSize="16sp"
+        android:textColor="#FFFFFF"
+        android:minHeight="120dp"
+        android:gravity="center"
+        android:layout_marginBottom="24dp"/>
+
+    <EditText
+        android:id="@+id/inputText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Type a command..."
+        android:textColor="#FFFFFF"
+        android:textColorHint="#888888"
+        android:backgroundTint="#00FF88"
+        android:layout_marginBottom="16dp"/>
+
+    <Button
+        android:id="@+id/sendButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Send to Ultron"
+        android:textColor="#1A1A2E"
+        android:backgroundTint="#00FF88"
+        android:layout_marginBottom="12dp"/>
+
+    <Button
+        android:id="@+id/voiceButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="🎙 Speak Command"
+        android:textColor="#00FF88"
+        android:backgroundTint="#1A1A2E"/>
+
+</LinearLayout>

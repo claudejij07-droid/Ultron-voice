@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.Ultron" parent="Theme.AppCompat.DayNight.DarkActionBar">
+        <item name="colorPrimary">#1A1A2E</item>
+        <item name="colorPrimaryDark">#0D0D1A</item>
+        <item name="colorAccent">#00FF88</item>
+    </style>
+</resources>

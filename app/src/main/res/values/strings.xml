@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Ultron</string>
+    <string name="accessibility_description">Ultron AI Assistant - Control your phone with voice commands. Say \"Ultron unlock\" to unlock your phone, \"Ultron message [contact] [text]\" to send messages, and more.</string>
+    <string name="service_started">Ultron is active</string>
+    <string name="status_online">🟢 Online</string>
+    <string name="status_offline">🔴 Offline</string>
+</resources>
