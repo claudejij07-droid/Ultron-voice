@@ -104,7 +104,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         }
 
         val json = JSONObject().apply {
-            put("model", "llama-3.3-70b-versatile")
+            put("model", "openai/gpt-oss-120b")
             put("messages", JSONArray().apply {
                 put(JSONObject().apply {
                     put("role", "user")
