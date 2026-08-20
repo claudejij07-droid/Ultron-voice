@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -6,28 +7,7 @@
     android:orientation="vertical"
     android:background="#F7F7F8">
 
-    <!-- Top bar -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:paddingStart="24dp"
-        android:paddingEnd="24dp"
-        android:background="#171827">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Ultron"
-            android:textColor="#FFFFFF"
-            android:textSize="25sp"
-            android:textStyle="bold"
-            android:fontFamily="sans" />
-
-    </LinearLayout>
-
-    <!-- Main content -->
+    <!-- MAIN CONTENT -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -39,67 +19,100 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingStart="24dp"
-            android:paddingEnd="24dp"
-            android:paddingTop="34dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:paddingTop="28dp"
             android:paddingBottom="24dp">
 
-            <!-- Soft Ultron header -->
+            <!-- ULTRON BRAND -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ULTRON"
+                android:textColor="#E3262E"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.22"
+                android:layout_marginBottom="30dp" />
+
+            <!-- GREETING -->
+            <TextView
+                android:id="@+id/greetingText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Hello sir,\nHow can I help you?"
+                android:textColor="#171717"
+                android:textSize="32sp"
+                android:textStyle="bold"
+                android:lineSpacingExtra="4dp" />
+
+            <!-- RED ACCENT -->
+            <View
+                android:layout_width="48dp"
+                android:layout_height="3dp"
+                android:layout_marginTop="20dp"
+                android:background="#E3262E" />
+
+            <!-- ULTRON CORE -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
+                android:layout_marginTop="28dp"
                 android:orientation="vertical"
                 android:gravity="center"
                 android:background="@drawable/ultron_header">
 
+                <ImageView
+                    android:layout_width="105dp"
+                    android:layout_height="105dp"
+                    android:src="@drawable/ultron_core"
+                    android:contentDescription="Ultron Core"
+                    android:layout_marginBottom="16dp" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="ULTRON"
-                    android:textColor="#171717"
-                    android:textSize="18sp"
+                    android:text="ULTRON CORE"
+                    android:textColor="#E3262E"
+                    android:textSize="12sp"
                     android:textStyle="bold"
-                    android:letterSpacing="0.12"
-                    android:layout_marginBottom="18dp" />
+                    android:letterSpacing="0.18" />
 
                 <TextView
-                    android:id="@+id/greetingText"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="What would you like to explore today?"
-                    android:textColor="#171717"
-                    android:textSize="28sp"
-                    android:textStyle="bold"
-                    android:gravity="center"
-                    android:paddingStart="12dp"
-                    android:paddingEnd="12dp" />
+                    android:text="ONLINE"
+                    android:textColor="#555555"
+                    android:textSize="10sp"
+                    android:letterSpacing="0.25"
+                    android:layout_marginTop="6dp" />
 
             </LinearLayout>
 
-            <!-- Space -->
+            <!-- GAP -->
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="22dp" />
+                android:layout_height="26dp" />
 
-            <!-- AI response card -->
+            <!-- PROJECT CARD -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="24dp"
-                app:cardElevation="2dp"
+                app:cardCornerRadius="22dp"
+                app:cardElevation="0dp"
                 app:cardBackgroundColor="#FFFFFF">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="22dp">
+                    android:padding="20dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Talk with your AI"
-                        android:textColor="#202020"
+                        android:text="New project in mind, sir?"
+                        android:textColor="#171717"
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
@@ -108,7 +121,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:text="Ask Ultron anything using text or your voice."
+                        android:text="Ready when you are, sir."
                         android:textColor="#777777"
                         android:textSize="14sp"
                         android:lineSpacingExtra="3dp" />
@@ -121,27 +134,27 @@
 
     </ScrollView>
 
-    <!-- Bottom input area -->
+    <!-- INPUT BAR -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:paddingStart="14dp"
-        android:paddingEnd="14dp"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         android:background="#FFFFFF"
-        android:elevation="10dp">
+        android:elevation="8dp">
 
         <EditText
             android:id="@+id/inputText"
             android:layout_width="0dp"
-            android:layout_height="54dp"
+            android:layout_height="52dp"
             android:layout_weight="1"
             android:hint="Ask anything..."
             android:textSize="16sp"
-            android:textColor="#222222"
+            android:textColor="#171717"
             android:textColorHint="#999999"
             android:background="@drawable/input_background"
             android:paddingStart="18dp"
@@ -152,10 +165,10 @@
             android:id="@+id/voiceButton"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:layout_marginStart="6dp"
+            android:layout_marginStart="5dp"
             android:background="@android:color/transparent"
-            android:src="@android:drawable/ic_btn_speak_now"
-            android:tint="#555555"
+            android:src="@drawable/ic_ultron_mic"
+            android:tint="#E3262E"
             android:contentDescription="Voice" />
 
         <ImageButton
@@ -164,7 +177,7 @@
             android:layout_height="50dp"
             android:layout_marginStart="2dp"
             android:background="@drawable/circle_red"
-            android:src="@android:drawable/ic_menu_send"
+            android:src="@drawable/ic_ultron_send"
             android:tint="#FFFFFF"
             android:contentDescription="Send"
             android:padding="12dp" />

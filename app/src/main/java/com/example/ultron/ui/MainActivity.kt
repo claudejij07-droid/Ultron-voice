@@ -45,12 +45,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         sendButton = findViewById(R.id.sendButton)
         voiceButton = findViewById(R.id.voiceButton)
 
-        if (UltronService.isAccessibilityEnabled(this)) {
-            greetingText.text = "Hi, what would you like to do today?"
-        } else {
-            greetingText.text = "Ultron needs accessibility access"
-            UltronService.openAccessibilitySettings(this)
-        }
+        greetingText.text = "Hello sir,\nHow can I help you?"
 
         sendButton.setOnClickListener {
             val command = inputText.text.toString()
