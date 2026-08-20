@@ -24,6 +24,10 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.ASSIST" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
 
         <service
@@ -36,22 +40,6 @@
             <meta-data
                 android:name="android.accessibilityservice"
                 android:resource="@xml/accessibility_service_config" />
-        </service>
-
-        <service
-            android:name=".service.OverlayService"
-            android:exported="false" />
-
-        <service
-            android:name=".service.UltronVoiceSession"
-            android:permission="android.permission.BIND_VOICE_INTERACTION"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.service.voice.VoiceInteractionService" />
-            </intent-filter>
-            <meta-data
-                android:name="android.voice_interaction"
-                android:resource="@xml/interaction_service" />
         </service>
 
     </application>
