@@ -4,17 +4,20 @@ plugins {
 }
 
 android {
-    buildFeatures { buildConfig true }
     namespace 'com.example.ultron'
     compileSdk 34
 
     defaultConfig {
-        buildConfigField "String", "ANTHROPIC_API_KEY", "\"${System.getenv(\"ANTHROPIC_API_KEY\") ?: \"\"}\""
         applicationId "com.example.ultron"
         minSdk 26
         targetSdk 34
         versionCode 1
         versionName "1.0"
+        buildConfigField "String", "ANTHROPIC_API_KEY", "\"${System.getenv('ANTHROPIC_API_KEY') ?: ''}\""
+    }
+
+    buildFeatures {
+        buildConfig true
     }
 
     buildTypes {
