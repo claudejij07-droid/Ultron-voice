@@ -32,6 +32,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     private lateinit var greetingText: TextView
     private lateinit var inputText: EditText
     private lateinit var voiceButton: ImageButton
+    private lateinit var sendButton: ImageButton
     private lateinit var tts: TextToSpeech
     private val VOICE_REQUEST_CODE = 100
 
@@ -45,6 +46,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         greetingText = findViewById(R.id.greetingText)
         inputText = findViewById(R.id.inputText)
         voiceButton = findViewById(R.id.voiceButton)
+        sendButton = findViewById(R.id.sendButton)
 
 
         if (UltronService.isAccessibilityEnabled(this)) {

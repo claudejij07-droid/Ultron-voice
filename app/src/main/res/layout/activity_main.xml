@@ -59,6 +59,15 @@
             android:src="@android:drawable/ic_btn_speak_now"
             android:contentDescription="Voice"/>
 
+        <ImageButton
+            android:id="@+id/sendButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="4dp"
+            android:background="@android:color/transparent"
+            android:src="@android:drawable/ic_menu_send"
+            android:contentDescription="Send"/>
+
     </LinearLayout>
 
 </RelativeLayout>
