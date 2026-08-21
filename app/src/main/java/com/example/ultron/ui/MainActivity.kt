@@ -54,9 +54,9 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         orbWebView.loadUrl("file:///android_asset/arc_reactor.html")
 
         if (UltronService.isAccessibilityEnabled(this)) {
-            greetingText.text = "Ultron is listening..."
+            greetingText.text = "Hello sir, how can I help you?"
         } else {
-            greetingText.text = "Ultron needs accessibility access"
+            greetingText.text = "New project in mind, sir?"
             UltronService.openAccessibilitySettings(this)
         }
 

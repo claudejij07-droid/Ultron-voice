@@ -5,4 +5,11 @@
         <item name="colorPrimaryDark">#0D0D1A</item>
         <item name="colorAccent">#00FF88</item>
     </style>
+
+    <style name="Theme.Ultron.NoActionBar" parent="Theme.Ultron">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
 </resources>
