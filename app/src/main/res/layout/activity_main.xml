@@ -47,13 +47,34 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/headerRow"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="30dp"
         android:text="New project in mind, sir?"
         android:textColor="#FFFFFF"
-        android:textSize="26sp"
+        android:textSize="24sp"
         android:fontFamily="sans-serif-light"
         android:gravity="center"
         android:paddingHorizontal="32dp"/>
+
+    <FrameLayout
+        android:id="@+id/orbContainer"
+        android:layout_width="220dp"
+        android:layout_height="220dp"
+        android:layout_centerInParent="true">
+
+        <ImageView
+            android:id="@+id/orbGlow"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/orb_glow"/>
+
+        <ImageView
+            android:id="@+id/orbCore"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_gravity="center"
+            android:src="@drawable/orb_core"/>
+
+    </FrameLayout>
 
     <TextView
         android:id="@+id/statusText"
