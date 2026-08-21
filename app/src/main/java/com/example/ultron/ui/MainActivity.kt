@@ -1,9 +1,11 @@
 package com.example.ultron.ui
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.speech.RecognizerIntent
 import android.speech.tts.TextToSpeech
+import android.webkit.WebView
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
@@ -29,11 +31,12 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     private lateinit var statusText: TextView
     private lateinit var greetingText: TextView
     private lateinit var inputText: EditText
-    private lateinit var sendButton: ImageButton
     private lateinit var voiceButton: ImageButton
+    private lateinit var orbWebView: WebView
     private lateinit var tts: TextToSpeech
     private val VOICE_REQUEST_CODE = 100
 
+    @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -42,22 +45,28 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         statusText = findViewById(R.id.statusText)
         greetingText = findViewById(R.id.greetingText)
         inputText = findViewById(R.id.inputText)
-        sendButton = findViewById(R.id.sendButton)
         voiceButton = findViewById(R.id.voiceButton)
+        orbWebView = findViewById(R.id.orbWebView)
+
+        orbWebView.settings.javaScriptEnabled = true
+        orbWebView.settings.domStorageEnabled = true
+        orbWebView.setBackgroundColor(0)
+        orbWebView.loadUrl("file:///android_asset/arc_reactor.html")
 
         if (UltronService.isAccessibilityEnabled(this)) {
-            greetingText.text = "Hi, what would you like to do today?"
+            greetingText.text = "Ultron is listening..."
         } else {
             greetingText.text = "Ultron needs accessibility access"
             UltronService.openAccessibilitySettings(this)
         }
 
-        sendButton.setOnClickListener {
+        inputText.setOnEditorActionListener { _, _, _ ->
             val command = inputText.text.toString()
             if (command.isNotEmpty()) {
                 statusText.text = "Thinking..."
                 sendToGroq(command)
             }
+            true
         }
 
         voiceButton.setOnClickListener {
