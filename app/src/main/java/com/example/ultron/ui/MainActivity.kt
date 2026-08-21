@@ -34,6 +34,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     private lateinit var sendButton: ImageButton
     private lateinit var tts: TextToSpeech
     private lateinit var pixelOrb: PixelOrbView
+    private lateinit var responseScroll: android.widget.ScrollView
     private val VOICE_REQUEST_CODE = 100
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -63,6 +64,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         voiceButton = findViewById(R.id.voiceButton)
         sendButton = findViewById(R.id.sendButton)
         pixelOrb = findViewById(R.id.pixelOrb)
+        responseScroll = findViewById(R.id.responseScroll)
 
         if (UltronService.isAccessibilityEnabled(this)) {
             greetingText.text = "Hello sir, how can I help you?"
@@ -74,6 +76,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         sendButton.setOnClickListener {
             val command = inputText.text.toString()
             if (command.isNotEmpty()) {
+                responseScroll.visibility = android.view.View.VISIBLE
                 statusText.text = "Thinking..."
                 sendToGroq(command)
             }
@@ -82,6 +85,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         inputText.setOnEditorActionListener { _, _, _ ->
             val command = inputText.text.toString()
             if (command.isNotEmpty()) {
+                responseScroll.visibility = android.view.View.VISIBLE
                 statusText.text = "Thinking..."
                 sendToGroq(command)
             }
@@ -125,6 +129,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             val spokenText = results?.get(0) ?: ""
             if (spokenText.isNotEmpty()) {
                 inputText.setText(spokenText)
+                responseScroll.visibility = android.view.View.VISIBLE
                 statusText.text = "Thinking..."
                 sendToGroq(spokenText)
             }
