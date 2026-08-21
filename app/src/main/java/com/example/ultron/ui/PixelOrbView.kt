@@ -18,6 +18,7 @@ class PixelOrbView @JvmOverloads constructor(
     private val pixelCount = 700
     private val points = mutableListOf<FloatArray>()
     private var time = 0f
+    var isSpeaking = false
 
     init {
         val rand = Random(42)
@@ -32,7 +33,7 @@ class PixelOrbView @JvmOverloads constructor(
 
     private fun postAnimation() {
         postDelayed({
-            time += 0.02f
+            time += if (isSpeaking) 0.05f else 0.02f
             invalidate()
             postAnimation()
         }, 30)
@@ -71,7 +72,8 @@ class PixelOrbView @JvmOverloads constructor(
             val scale = d[2]
             val layerDepth = d[3]
 
-            val pulse = 0.6f + 0.4f * sin(time * 3f + layerDepth * 10f)
+            val speakBoost = if (isSpeaking) 1.3f else 1.0f
+            val pulse = (0.6f + 0.4f * sin(time * (if (isSpeaking) 6f else 3f) + layerDepth * 10f)) * speakBoost
             val alpha = (scale * 255 * pulse).toInt().coerceIn(15, 255)
 
             paint.color = Color.argb(alpha, 255, 140 + (scale * 80).toInt(), 20)

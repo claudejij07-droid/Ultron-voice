@@ -33,6 +33,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     private lateinit var voiceButton: ImageButton
     private lateinit var sendButton: ImageButton
     private lateinit var tts: TextToSpeech
+    private lateinit var pixelOrb: PixelOrbView
     private val VOICE_REQUEST_CODE = 100
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -44,12 +45,24 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         setContentView(R.layout.activity_main)
         tts = TextToSpeech(this, this)
         tts.setSpeechRate(1.0f)
+        tts.setOnUtteranceProgressListener(object : android.speech.tts.UtteranceProgressListener() {
+            override fun onStart(utteranceId: String?) {
+                runOnUiThread { pixelOrb.isSpeaking = true }
+            }
+            override fun onDone(utteranceId: String?) {
+                runOnUiThread { pixelOrb.isSpeaking = false }
+            }
+            override fun onError(utteranceId: String?) {
+                runOnUiThread { pixelOrb.isSpeaking = false }
+            }
+        })
 
         statusText = findViewById(R.id.statusText)
         greetingText = findViewById(R.id.greetingText)
         inputText = findViewById(R.id.inputText)
         voiceButton = findViewById(R.id.voiceButton)
         sendButton = findViewById(R.id.sendButton)
+        pixelOrb = findViewById(R.id.pixelOrb)
 
         if (UltronService.isAccessibilityEnabled(this)) {
             greetingText.text = "Hello sir, how can I help you?"
@@ -87,7 +100,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                 tts.language = Locale.US
             }
             tts.setPitch(0.7f)
-            tts.speak("Ultron online, how can I help you, sir", TextToSpeech.QUEUE_FLUSH, null, null)
+            tts.speak("Ultron online, how can I help you, sir", TextToSpeech.QUEUE_FLUSH, null, "greeting")
         }
     }
 
@@ -160,7 +173,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                 runOnUiThread {
                     statusText.text = reply
                     inputText.text.clear()
-                    tts.speak(reply, TextToSpeech.QUEUE_FLUSH, null, null)
+                    tts.speak(reply, TextToSpeech.QUEUE_FLUSH, null, "reply")
                 }
             }
         })
