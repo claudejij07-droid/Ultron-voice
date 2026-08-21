@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.speech.RecognizerIntent
 import android.speech.tts.TextToSpeech
-import android.webkit.WebView
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
@@ -52,12 +51,19 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         voiceButton = findViewById(R.id.voiceButton)
         sendButton = findViewById(R.id.sendButton)
 
-
         if (UltronService.isAccessibilityEnabled(this)) {
             greetingText.text = "Hello sir, how can I help you?"
         } else {
             greetingText.text = "New project in mind, sir?"
             UltronService.openAccessibilitySettings(this)
+        }
+
+        sendButton.setOnClickListener {
+            val command = inputText.text.toString()
+            if (command.isNotEmpty()) {
+                statusText.text = "Thinking..."
+                sendToGroq(command)
+            }
         }
 
         inputText.setOnEditorActionListener { _, _, _ ->
@@ -159,32 +165,4 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             }
         })
     }
-        val pulse = android.animation.ObjectAnimator.ofPropertyValuesHolder(
-            orbCore,
-            android.animation.PropertyValuesHolder.ofFloat("scaleX", 1f, 1.08f, 1f),
-            android.animation.PropertyValuesHolder.ofFloat("scaleY", 1f, 1.08f, 1f)
-        )
-        pulse.duration = 2200
-        pulse.repeatCount = android.animation.ObjectAnimator.INFINITE
-        pulse.interpolator = android.view.animation.AccelerateDecelerateInterpolator()
-        pulse.start()
-
-        val glowPulse = android.animation.ObjectAnimator.ofPropertyValuesHolder(
-            orbGlow,
-            android.animation.PropertyValuesHolder.ofFloat("alpha", 0.6f, 1f, 0.6f),
-            android.animation.PropertyValuesHolder.ofFloat("scaleX", 0.95f, 1.15f, 0.95f),
-            android.animation.PropertyValuesHolder.ofFloat("scaleY", 0.95f, 1.15f, 0.95f)
-        )
-        glowPulse.duration = 2200
-        glowPulse.repeatCount = android.animation.ObjectAnimator.INFINITE
-        glowPulse.interpolator = android.view.animation.AccelerateDecelerateInterpolator()
-        glowPulse.start()
-
-        val rotate = android.animation.ObjectAnimator.ofFloat(orbCore, "rotation", 0f, 360f)
-        rotate.duration = 12000
-        rotate.repeatCount = android.animation.ObjectAnimator.INFINITE
-        rotate.interpolator = android.view.animation.LinearInterpolator()
-        rotate.start()
-    }
-
 }
