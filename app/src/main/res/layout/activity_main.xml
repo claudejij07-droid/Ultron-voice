@@ -2,18 +2,45 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_gradient">
+    android:background="@drawable/bg_gradient"
+    android:fitsSystemWindows="false">
+
+    <LinearLayout
+        android:id="@+id/headerRow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:orientation="horizontal"
+        android:padding="20dp"
+        android:paddingTop="36dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Last projects"
+            android:textColor="#EEDCC8"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New project"
+            android:textColor="#EEDCC8"
+            android:textSize="14sp"/>
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/greetingText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_marginBottom="180dp"
-        android:text="Hello sir, how can I help you?"
+        android:layout_below="@id/headerRow"
+        android:layout_marginTop="60dp"
+        android:text="New project in mind, sir?"
         android:textColor="#FFFFFF"
-        android:textSize="24sp"
-        android:textStyle="bold"
+        android:textSize="26sp"
+        android:fontFamily="sans-serif-light"
         android:gravity="center"
         android:paddingHorizontal="32dp"/>
 
