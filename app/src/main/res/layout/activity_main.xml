@@ -55,26 +55,11 @@
         android:gravity="center"
         android:paddingHorizontal="32dp"/>
 
-    <FrameLayout
-        android:id="@+id/orbContainer"
-        android:layout_width="220dp"
-        android:layout_height="220dp"
-        android:layout_centerInParent="true">
-
-        <ImageView
-            android:id="@+id/orbGlow"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/orb_glow"/>
-
-        <ImageView
-            android:id="@+id/orbCore"
-            android:layout_width="160dp"
-            android:layout_height="160dp"
-            android:layout_gravity="center"
-            android:src="@drawable/orb_core"/>
-
-    </FrameLayout>
+    <com.example.ultron.ui.PixelOrbView
+        android:id="@+id/pixelOrb"
+        android:layout_width="260dp"
+        android:layout_height="260dp"
+        android:layout_centerInParent="true"/>
 
     <TextView
         android:id="@+id/statusText"
