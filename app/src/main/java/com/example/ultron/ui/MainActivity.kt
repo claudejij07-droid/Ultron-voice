@@ -32,7 +32,6 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     private lateinit var greetingText: TextView
     private lateinit var inputText: EditText
     private lateinit var voiceButton: ImageButton
-    private lateinit var orbWebView: WebView
     private lateinit var tts: TextToSpeech
     private val VOICE_REQUEST_CODE = 100
 
@@ -46,12 +45,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         greetingText = findViewById(R.id.greetingText)
         inputText = findViewById(R.id.inputText)
         voiceButton = findViewById(R.id.voiceButton)
-        orbWebView = findViewById(R.id.orbWebView)
 
-        orbWebView.settings.javaScriptEnabled = true
-        orbWebView.settings.domStorageEnabled = true
-        orbWebView.setBackgroundColor(0)
-        orbWebView.loadUrl("file:///android_asset/arc_reactor.html")
 
         if (UltronService.isAccessibilityEnabled(this)) {
             greetingText.text = "Hello sir, how can I help you?"

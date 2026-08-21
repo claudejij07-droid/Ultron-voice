@@ -10,19 +10,12 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_marginTop="60dp"
-        android:text="Ultron is listening..."
+        android:text="Hello sir, how can I help you?"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
         android:textStyle="bold"
         android:gravity="center"
         android:paddingHorizontal="32dp"/>
-
-    <WebView
-        android:id="@+id/orbWebView"
-        android:layout_width="260dp"
-        android:layout_height="260dp"
-        android:layout_centerInParent="true"
-        android:background="@android:color/transparent"/>
 
     <TextView
         android:id="@+id/statusText"
